@@ -1,0 +1,37 @@
+/* 1. Set up the I2C Expander */
+&i2c0 {
+    status = "okay";
+    
+    /* Address 0x20 matches tying A0, A1, A2 to ground */
+    pca9555: pca95xx@20 {
+        compatible = "nxp,pca95xx";
+        reg = <0x20>;
+        gpio-controller;
+        #gpio-cells = <2>;
+        ngpios = <16>;
+    };
+};
+
+/* 2. Set up the Matrix Scanner */
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+    };
+
+    kscan0: kscan_0 {
+        compatible = "zmk,kscan-gpio-matrix";
+        diode-direction = "col2row";
+        
+        /* The columns we wired (Port 0: Pins 2 and 3) */
+        col-gpios
+            = <&pca9555 2 GPIO_ACTIVE_HIGH>
+            , <&pca9555 3 GPIO_ACTIVE_HIGH>
+            ;
+
+        /* The rows we wired (Port 0: Pins 0 and 1) */
+        row-gpios
+            = <&pca9555 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            , <&pca9555 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+            ;
+    };
+};
