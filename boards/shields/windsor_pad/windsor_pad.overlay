@@ -1,5 +1,5 @@
-/* 1. Set up the I2C Expander */
-&i2c0 {
+/* 1. Set up the I2C Expander on the EXTERNAL bus (D4/D5) */
+&i2c1 {
     status = "okay";
     
     pca9555: pca95xx@20 {
@@ -21,13 +21,11 @@
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "col2row";
         
-        /* Drive columns LOW when active to trigger the rows */
         col-gpios
             = <&pca9555 2 GPIO_ACTIVE_LOW>
             , <&pca9555 3 GPIO_ACTIVE_LOW>
             ;
 
-        /* Trigger on LOW. GPIO_PULL_UP removed to prevent driver crash! */
         row-gpios
             = <&pca9555 0 GPIO_ACTIVE_LOW>
             , <&pca9555 1 GPIO_ACTIVE_LOW>
