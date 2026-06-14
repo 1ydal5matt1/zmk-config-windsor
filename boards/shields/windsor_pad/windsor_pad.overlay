@@ -20,6 +20,7 @@
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
         diode-direction = "col2row";
+        settle-time-us = <5000>;
         
         /* Drive columns LOW when active */
         col-gpios
