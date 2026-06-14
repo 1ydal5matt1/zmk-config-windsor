@@ -27,8 +27,9 @@
     /* 1. Define the physical encoder on pins D6 (P1.11) and D7 (P1.12) */
     left_encoder: encoder_left {
         compatible = "alps,ec11";
-        a-gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        /* Force Low-Active to match common module behaviors */
+        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         steps = <80>;
         status = "okay";
     };
