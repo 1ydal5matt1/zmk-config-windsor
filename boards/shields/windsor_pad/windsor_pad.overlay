@@ -21,3 +21,22 @@
             ;
     };
 };
+/* ... Keep your existing kscan0 matrix setup exactly as it is ... */
+
+/ {
+    /* 1. Define the physical encoder on pins D6 (P1.11) and D7 (P1.12) */
+    left_encoder: encoder_left {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <80>;
+        status = "okay";
+    };
+
+    /* 2. Add it to the keymap sensors array */
+    sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder>;
+        triggers-per-rotation = <20>;
+    };
+};
