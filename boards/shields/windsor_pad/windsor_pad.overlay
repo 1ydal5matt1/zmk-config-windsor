@@ -29,8 +29,8 @@
 
         /* Trigger on LOW. PULL_UP removed to prevent the runtime crash! */
         row-gpios
-            = <&pca9555 0 GPIO_ACTIVE_LOW>
-            , <&pca9555 4 GPIO_ACTIVE_LOW>
+            = <&pca9555 8 GPIO_ACTIVE_LOW>
+            , <&pca9555 9 GPIO_ACTIVE_LOW>
             ;
     };
 };
