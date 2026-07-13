@@ -21,16 +21,19 @@
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
         
-        diode-direction = "row2col";[cite: 2]
+        diode-direction = "row2col";
+        
+        // CRITICAL FIX: Tell ZMK to poll every 10ms
+        poll-period-ms = <10>; 
 
-        // Rows are moved back to the XIAO[cite: 2]
+        // Rows are Outputs
         row-gpios
-            = <&xiao_d 0 GPIO_ACTIVE_HIGH>[cite: 2]
-            , <&xiao_d 1 GPIO_ACTIVE_HIGH>[cite: 2]
-            , <&xiao_d 2 GPIO_ACTIVE_HIGH>[cite: 2]
+            = <&io_expander 0 GPIO_ACTIVE_HIGH>
+            , <&io_expander 1 GPIO_ACTIVE_HIGH>
+            , <&io_expander 2 GPIO_ACTIVE_HIGH>
             ;
 
-        // Columns stay on the TCA9555 I/O expander
+        // Columns are Inputs (Requires external 470-ohm pull-downs to GND)
         col-gpios
             = <&io_expander 3 GPIO_ACTIVE_HIGH>
             , <&io_expander 4 GPIO_ACTIVE_HIGH>
@@ -45,6 +48,7 @@
 
     io_expander: tca9555@20 {
         compatible = "nxp,pca95xx";
+        status = "okay"; // Added for safety
         reg = <0x20>; 
         gpio-controller;
         #gpio-cells = <2>;
