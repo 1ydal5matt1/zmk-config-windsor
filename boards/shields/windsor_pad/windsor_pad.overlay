@@ -51,12 +51,6 @@
         gpio-controller;
         #gpio-cells = <2>;
         ngpios = <16>; 
-
-        // --- NEW REQUIRED INTERRUPT CONFIGURATION ---
-        // The TCA9555 INT pin is Active Low. We enable the internal Pull-Up 
-        // on the XIAO so you don't need another physical resistor.
-        interrupt-gpios = <&xiao_d 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        interrupt-controller;
-        #interrupt-cells = <2>;
+        // Interrupt properties completely removed
     };
 };
