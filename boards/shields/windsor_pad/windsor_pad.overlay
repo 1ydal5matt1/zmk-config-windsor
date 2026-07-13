@@ -47,8 +47,9 @@
 
     io_expander: tca9555@20 {
         compatible = "nxp,pca95xx";
-        reg = <0x20>; // Address derived from L, L, L
+        reg = <0x20>; 
         gpio-controller;
         #gpio-cells = <2>;
+        ngpios = <16>;
     };
 };
