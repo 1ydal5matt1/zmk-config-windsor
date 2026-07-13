@@ -41,15 +41,15 @@
     };
 };
 
-// Define the I2C bus and the TCA9555 expander
 &xiao_i2c {
     status = "okay";
+    clock-frequency = <I2C_BITRATE_STANDARD>; // Add this line to stabilize I2C
 
     io_expander: tca9555@20 {
         compatible = "nxp,pca95xx";
         reg = <0x20>; 
         gpio-controller;
         #gpio-cells = <2>;
-        ngpios = <16>;
+        ngpios = <16>; 
     };
 };
