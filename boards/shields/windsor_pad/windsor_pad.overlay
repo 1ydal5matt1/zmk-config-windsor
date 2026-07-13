@@ -21,8 +21,8 @@
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
         
-        // Change to "row2col" if your diodes point from rows to columns
-        diode-direction = "col2row";
+        // Change to "row2col" if your diodes point from rows to columns col2row
+        diode-direction = "row2col";
 
         // Row pins
         row-gpios
