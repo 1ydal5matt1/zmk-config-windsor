@@ -1,43 +1,41 @@
+#include <dt-bindings/zmk/matrix_transform.h>
+
 / {
     chosen {
         zmk,kscan = &kscan0;
+        zmk,matrix_transform = &default_transform;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <3>;
+        rows = <3>;
+        map = <
+            RC(0,0) RC(0,1) RC(0,2)
+            RC(1,0) RC(1,1) RC(1,2)
+            RC(2,0) RC(2,1) RC(2,2)
+        >;
     };
 
     kscan0: kscan_0 {
         compatible = "zmk,kscan-gpio-matrix";
-        diode-direction = "col2row";
+        wakeup-source;
         
-        /* Columns: D0 (P0.02) and D1 (P0.03) */
-        col-gpios
-            = <&gpio0 2 GPIO_ACTIVE_HIGH>
-            , <&gpio0 3 GPIO_ACTIVE_HIGH>
-            ;
+        // Change to "row2col" if your diodes point from rows to columns
+        diode-direction = "col2row";
 
-        /* Rows: D2 (P0.28) and D3 (P0.29) */
-        /* Native GPIO lets us use perfect internal PULL_DOWN resistors! */
+        // Row pins
         row-gpios
-            = <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
-            , <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            = <&xiao_d 0 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+            , <&xiao_d 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
             ;
-    };
-};
-/* ... Keep your existing kscan0 matrix setup exactly as it is ... */
 
-/ {
-    /* 1. Define the physical encoder on pins D6 (P1.11) and D7 (P1.12) */
-    left_encoder: encoder_left {
-        compatible = "alps,ec11";
-        /* Force Low-Active to match common module behaviors */
-        a-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        b-gpios = <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        steps = <80>;
-        status = "okay";
-    };
-
-    /* 2. Add it to the keymap sensors array */
-    sensors {
-        compatible = "zmk,keymap-sensors";
-        sensors = <&left_encoder>;
-        triggers-per-rotation = <4>;
+        // Column pins
+        col-gpios
+            = <&xiao_d 3 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 4 GPIO_ACTIVE_HIGH>
+            , <&xiao_d 5 GPIO_ACTIVE_HIGH>
+            ;
     };
 };
