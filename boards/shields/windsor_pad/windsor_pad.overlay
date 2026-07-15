@@ -60,6 +60,6 @@
 
         // FIX: Use interrupt-gpios instead of interrupt-parent / interrupts
         // Replace &gpio0 and 17 with your actual port and pin number
-        interrupt-gpios = <&gpio0 17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; 
+        interrupt-gpios = <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; 
     };
 };
