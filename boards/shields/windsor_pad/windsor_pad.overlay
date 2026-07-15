@@ -58,9 +58,8 @@
         interrupt-controller;
         #interrupt-cells = <2>;
 
-        // REPLACE THESE with the actual port and pin the TCA9555 INT pin is connected to.
-        // Example: If connected to nRF52840 P0.17 (XIAO BLE D6)
-        interrupt-parent = <&gpio0>;
-        interrupts = <17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; 
+        // FIX: Use interrupt-gpios instead of interrupt-parent / interrupts
+        // Replace &gpio0 and 17 with your actual port and pin number
+        interrupt-gpios = <&gpio0 17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; 
     };
 };
