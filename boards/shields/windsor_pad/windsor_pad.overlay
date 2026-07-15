@@ -1,4 +1,5 @@
 #include <dt-bindings/zmk/matrix_transform.h>
+#include <dt-bindings/gpio/gpio.h>
 
 / {
     chosen {
@@ -23,8 +24,7 @@
         
         diode-direction = "row2col";
         
-        // CRITICAL FIX: Tell ZMK to poll every 10ms
-        poll-period-ms = <10>; 
+        // Removed poll-period-ms to allow ZMK to default to interrupt-driven scanning
 
         // Rows are Outputs
         row-gpios
@@ -48,10 +48,19 @@
 
     io_expander: tca9555@20 {
         compatible = "nxp,pca95xx";
-        status = "okay"; // Added for safety
+        status = "okay"; 
         reg = <0x20>; 
         gpio-controller;
         #gpio-cells = <2>;
         ngpios = <16>; 
+
+        // --- INTERRUPT CONFIGURATION ---
+        interrupt-controller;
+        #interrupt-cells = <2>;
+
+        // REPLACE THESE with the actual port and pin the TCA9555 INT pin is connected to.
+        // Example: If connected to nRF52840 P0.17 (XIAO BLE D6)
+        interrupt-parent = <&gpio0>;
+        interrupts = <17 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; 
     };
 };
